@@ -5,7 +5,7 @@ interface IMockRequest {
   params?: Params,
 }
 
-export function MakeMockRequest({ params }: IMockRequest) {
+export function makeMockRequest({params}: IMockRequest) {
   const request = {
     params: params || {}
   } as unknown

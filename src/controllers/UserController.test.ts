@@ -1,10 +1,13 @@
 import createConnection from "../database";
 import { UserController } from "./UsersControler"
 import { Request } from "express";
-import { makeMockResponse } from "../utils/mocks/mockReponse";
+import { makeMockResponse } from "../utils/mocks/mockResponse";
 import { getConnection } from "typeorm";
+import { FakeData } from "../utils/mocks/fakeData/FakeData";
+import { makeMockRequest } from "../utils/mocks/mockRequest";
 
-describe("UserController", () => {
+
+describe("User Controller create", () => {
 
   beforeAll(async () => {
     const connection = await createConnection()
@@ -57,5 +60,33 @@ describe("UserController", () => {
     await userController.createUser(request, response)
 
     expect(response.state.status).toBe(400)
+  })
+})
+
+describe('Get all user function', () => {
+  beforeAll(async () => {
+    const connection = await createConnection()
+    await connection.runMigrations()
+  })
+
+  afterAll(async () => {
+    const connection = getConnection()
+    await connection.query('DELETE from users')
+    await connection.close()
+  })
+
+  const fakeData = new FakeData()
+
+  it('Deve retornar statu 200 quando retornar todos os usuarios', async () => {
+    await fakeData.execute()
+
+    const userController = new UserController()
+    const request = makeMockRequest({})
+    const response = makeMockResponse()
+    
+    await userController.getAllUser(request, response)
+
+    expect(response.state.status).toBe(200)
+    
   })
 })

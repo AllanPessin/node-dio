@@ -12,5 +12,6 @@ router.get('/', (request: Request, response: Response) => {
 })
 
 router.post('/users', userController.createUser)
+router.get('/users', userController.getAllUser)
 
 export { router }

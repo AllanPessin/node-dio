@@ -19,8 +19,8 @@ describe('User Services', () => {
     const userService = new UserService()
     const result = await userService.create({
       id: uuid(),
-      name: "Allan",
-      email: "allan@email.com"
+      name: "usuario",
+      email: "usuario@email.com"
     })
 
     console.log(result)
