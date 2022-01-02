@@ -13,5 +13,7 @@ router.get('/', (request: Request, response: Response) => {
 
 router.post('/users', userController.createUser)
 router.get('/users', userController.getAllUser)
+router.patch('/user', userController.updateUser)
+router.delete('/user/:id', userController.deleteUser)
 
 export { router }

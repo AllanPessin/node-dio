@@ -27,7 +27,7 @@ describe("User Controller create", () => {
     const request = {
       body: {
         name: "Usuario",
-        email: "allan@email.com"
+        email: "usuario@email.com"
       }
     } as Request
 
@@ -40,7 +40,7 @@ describe("User Controller create", () => {
     const request = {
       body: {
         name: "",
-        email: "allan@email.com"
+        email: "usuario@email.com"
       }
     } as Request
 
@@ -52,7 +52,7 @@ describe("User Controller create", () => {
   it('Deve retornar status 400 quando email não for informado', async () => {
     const request = {
       body: {
-        name: "Allan",
+        name: "Usuario",
         email: ""
       }
     } as Request
@@ -83,10 +83,70 @@ describe('Get all user function', () => {
     const userController = new UserController()
     const request = makeMockRequest({})
     const response = makeMockResponse()
-    
+
     await userController.getAllUser(request, response)
 
     expect(response.state.status).toBe(200)
+
+  })
+})
+
+describe('Update user function', () => {
+  beforeAll(async () => {
+    const connection = await createConnection()
+    await connection.runMigrations()
+  })
+
+  afterAll(async () => {
+    const connection = getConnection()
+    await connection.query('DELETE from users')
+    await connection.close()
+  })
+
+  const fakeData = new FakeData()
+
+  it('Deve retornar status 204 quando usuário for editado', async () => {
+    const userController = new UserController()
+    const mockUser = await fakeData.createuser()
+    const request = {
+      body: {
+        id: mockUser.id,
+        name: 'Outro usuário',
+        email: "email@email.com"
+      }
+    } as Request
+    const response = makeMockResponse()
+
+    await userController.updateUser(request, response)
+
+    expect(response.state.status).toBe(204)
+  })
+})
+
+describe('Delete user function', () => {
+  beforeAll(async () => {
+    const connection = await createConnection()
+    await connection.runMigrations()
+  })
+
+  afterAll(async () => {
+    const connection = getConnection()
+    await connection.close()
+  })
+
+  const fakeData = new FakeData()
+
+  it('Deve retornar status 204 quando usuário for deletado', async () => {
+    const deletUser = new UserController()
+    const mockUser = await fakeData.createuser()
+    const request = makeMockRequest({
+      params: {
+        id: mockUser.id
+      }
+    })
+    const response = makeMockResponse()
     
+    await deletUser.deleteUser(request, response)
+    expect(response.state.status).toBe(204)
   })
 })

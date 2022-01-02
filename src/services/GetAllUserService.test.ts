@@ -7,8 +7,7 @@ import { FakeData } from "../utils/mocks/fakeData/FakeData";
 describe('Get all user service', () => {
   beforeAll(async () => {
     const connection = await createConnection()
-    await connection.runMigrations()
-    
+    await connection.runMigrations()    
   })
 
   afterAll(async () => {
