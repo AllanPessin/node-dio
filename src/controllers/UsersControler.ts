@@ -13,7 +13,7 @@ class UserController {
 
     const user = await userService.create({ id, name, email })
     
-    return response.status(200).json({ user })
+    return response.status(200).json(user)
   }
 }
 

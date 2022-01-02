@@ -23,7 +23,7 @@ class UserService {
       ])
       .execute()
 
-    return user
+    return user.identifiers[0]
   }
 }
 
