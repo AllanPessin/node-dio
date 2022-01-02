@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "test": "cross-env NODE_ENV='test' jest --runInBand --watch"
+    "test": "cross-env NODE_ENV='test' jest --runInBand --watch",
+    "test:cov": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --no-cache --runInBand --coverage"
   },
   "author": "AllanPessin",
   "license": "MIT",
